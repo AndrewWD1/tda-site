@@ -18,3 +18,8 @@
   width: 150px;
   justify-content: space-between;
 }
+
+.Point {
+  position: absolute;
+  cursor: default;
+}

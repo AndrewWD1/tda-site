@@ -5,10 +5,10 @@ function Point({ vals }: { vals: number[] }) {
   return (
     <div
       style={{
-        position: "absolute",
         bottom: vals[1],
         left: vals[0],
       }}
+      className="Point"
     >
       &#x2022;
     </div>
@@ -28,14 +28,14 @@ export default function App() {
       <div
         className="Plot"
         onClick={(e: React.MouseEvent<HTMLElement>) => {
+          // rect finds the absolute position of the box
           const rect = e.currentTarget.getBoundingClientRect();
-          updateState([
-            ...state,
-            [
-              Number(e.clientX - rect.left),
-              Number(400 - (e.clientY - rect.top)),
-            ],
-          ]);
+
+          // Find the relative position of point within the box
+          const left = Number(e.clientX - rect.left - 3);
+          const top = Number(400 - (e.clientY - rect.top + 9));
+
+          updateState([...state, [left, top]]);
         }}
       >
         {state.map((point, index) => (
@@ -69,7 +69,19 @@ export default function App() {
           Clear
         </button>
       </div>
-      {img && <img src={img} />}
+      {img && (
+        <div
+          style={{
+            border: "1px solid black",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h2>Persistance Diagram</h2>
+          <img src={img} />
+        </div>
+      )}
     </div>
   );
 }
