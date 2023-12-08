@@ -1,18 +1,33 @@
 import { useState } from "react";
 import "./styles.css";
 
+function Point({ vals }: { vals: number[] }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        bottom: vals[1],
+        left: vals[0],
+        width: "1px",
+        height: "1px",
+        border: " 1px solid black",
+      }}
+    ></div>
+  );
+}
+
 export default function App() {
   const [state, updateState] = useState([] as number[][]);
 
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
+      <h1>TDA Tester</h1>
+      <p>
+        Click to add points to your scatter plot. Then run we can create a
+        persistance diagram for this data
+      </p>
       <div
-        style={{
-          width: "400px",
-          height: "400px",
-          border: "1px solid black",
-        }}
+        className="Plot"
         onClick={(e: React.MouseEvent<HTMLElement>) => {
           const rect = e.currentTarget.getBoundingClientRect();
           updateState([
@@ -23,10 +38,11 @@ export default function App() {
             ],
           ]);
         }}
-      ></div>
-      {state.map((point) => (
-        <div key={point[0].toString()}>{point}</div>
-      ))}
+      >
+        {state.map((point, index) => (
+          <Point vals={point} key={index} />
+        ))}
+      </div>
     </div>
   );
 }
