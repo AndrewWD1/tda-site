@@ -18,6 +18,7 @@ function Point({ vals }: { vals: number[] }) {
 
 export default function App() {
   const [state, updateState] = useState([] as number[][]);
+  const [img, setImg] = useState("");
 
   return (
     <div className="App">
@@ -43,6 +44,23 @@ export default function App() {
           <Point vals={point} key={index} />
         ))}
       </div>
+      <button
+        onClick={async () => {
+          const res = await fetch("https://tda-api.andrewdoumont.repl.co/", {
+            method: "POST",
+            body: JSON.stringify(state),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          const imBlob = await res.blob();
+          const imageObjectURL = URL.createObjectURL(imBlob);
+          setImg(imageObjectURL);
+        }}
+      >
+        Submit
+      </button>
+      {img && <img src={img} />}
     </div>
   );
 }
