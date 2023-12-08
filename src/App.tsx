@@ -8,11 +8,10 @@ function Point({ vals }: { vals: number[] }) {
         position: "absolute",
         bottom: vals[1],
         left: vals[0],
-        width: "1px",
-        height: "1px",
-        border: " 1px solid black",
       }}
-    ></div>
+    >
+      &#x2022;
+    </div>
   );
 }
 
@@ -22,10 +21,9 @@ export default function App() {
 
   return (
     <div className="App">
-      <h1>TDA Tester</h1>
       <p>
-        Click to add points to your scatter plot. Then run we can create a
-        persistance diagram for this data
+        Click to add points to your scatter plot. Then click submit to get a
+        persistance diagram for your plot.
       </p>
       <div
         className="Plot"
@@ -44,22 +42,33 @@ export default function App() {
           <Point vals={point} key={index} />
         ))}
       </div>
-      <button
-        onClick={async () => {
-          const res = await fetch("https://tda-api.andrewdoumont.repl.co/", {
-            method: "POST",
-            body: JSON.stringify(state),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          const imBlob = await res.blob();
-          const imageObjectURL = URL.createObjectURL(imBlob);
-          setImg(imageObjectURL);
-        }}
-      >
-        Submit
-      </button>
+      <div className="ButtonHolder">
+        <button
+          onClick={async () => {
+            const res = await fetch("https://tda-api.andrewdoumont.repl.co/", {
+              method: "POST",
+              body: JSON.stringify(state),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+            const imBlob = await res.blob();
+            const imageObjectURL = URL.createObjectURL(imBlob);
+            setImg(imageObjectURL);
+          }}
+        >
+          Submit
+        </button>
+        <button
+          onClick={() => {
+            updateState([]);
+            setImg("");
+          }}
+        >
+          {" "}
+          Clear
+        </button>
+      </div>
       {img && <img src={img} />}
     </div>
   );
