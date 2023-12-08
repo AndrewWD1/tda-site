@@ -1,19 +1,6 @@
 import { useState } from "react";
+import Point from "./components/Point";
 import "./styles.css";
-
-function Point({ vals }: { vals: number[] }) {
-  return (
-    <div
-      style={{
-        bottom: vals[1],
-        left: vals[0],
-      }}
-      className="Point"
-    >
-      &#x2022;
-    </div>
-  );
-}
 
 export default function App() {
   const [state, updateState] = useState([] as number[][]);
