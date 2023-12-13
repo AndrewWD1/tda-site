@@ -32,13 +32,16 @@ export default function App() {
       <div className="ButtonHolder">
         <button
           onClick={async () => {
-            const res = await fetch("https://tda-api.andrewdoumont.repl.co/", {
-              method: "POST",
-              body: JSON.stringify(state),
-              headers: {
-                "Content-Type": "application/json",
+            const res = await fetch(
+              "https://tda-api-andrewdoumont.replit.app/",
+              {
+                method: "POST",
+                body: JSON.stringify(state),
+                headers: {
+                  "Content-Type": "application/json",
+                },
               },
-            });
+            );
             const imBlob = await res.blob();
             const imageObjectURL = URL.createObjectURL(imBlob);
             setImg(imageObjectURL);
